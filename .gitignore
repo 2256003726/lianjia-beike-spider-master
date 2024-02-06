@@ -1,0 +1,6 @@
+*.pyc
+.idea/
+data/
+*.html
+*.csv
+log/log.txt
