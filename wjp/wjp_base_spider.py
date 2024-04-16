@@ -34,7 +34,7 @@ class WjpBaseSpider(object):
             time.sleep(random.randint(0, 16))
 
 
-    def __init__(self, name, date):
+    def __init__(self, name):
         """
         根据爬虫名称和日期初始化类
         @param name: 爬虫名称
@@ -49,7 +49,8 @@ class WjpBaseSpider(object):
         else:
             self.cities = None
         # 准备日期信息，爬到的数据存放在日期相关的文件夹下面
-        self.date_string = date
+        # self.date_string = date
+        self.date_string = get_date_string()
         print('当前爬取的日期为: {0}'.format(self.date_string))
         # 小区总数，用于统计
         self.total_neighborhood_num = 0

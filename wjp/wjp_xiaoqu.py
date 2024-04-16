@@ -27,6 +27,6 @@ def get_custom_date_string(year, month, day):
 
 if __name__ == "__main__":
     # spider = XiaoQuBaseSpider(SPIDER_NAME)
-    date = get_custom_date_string(2024, 1, 15)
-    spider = WjpNeighborhoodSpider(SPIDER_NAME, date)
+    # date = get_custom_date_string(2024, 3, 27)
+    spider = WjpNeighborhoodSpider(SPIDER_NAME)
     spider.start()

@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 start_time = time.time()
 
 # 指定目标文件夹路径
-data_folder = '../data/ke/xiaoqu/sh/20231222'
+data_folder = '../data/ke/xiaoqu/sh/20240327'
 # data_folder = '../../data/ke/xiaoqu/sh/20230115'
 
 # data_folder = '../../data/ke/xiaoqu/zz/20240115'
@@ -33,24 +33,11 @@ for file in file_list:
         print(f"文件 {file_path}")
 
         # 出错处理（可能出现字段数量不匹配的问题，比如绝大部分行是6个字段，个别行是7个字段，会报错！）
-        lines = []
-        with open(file_path, 'r', encoding='gbk') as eFile:
-            lines = eFile.readlines()
-            # 处理错误行
-            for i, line in enumerate(lines):
-                # 处理字段数量不符合预期的行(标准字段是6个，处理字段为7个的)，将第4至倒数第二个合并为一个字段，如：20231222,宝山,高境,国权北路405,407号,暂无数据,0套在售二手房
-                split_line = line.split(',')
-                if len(split_line) > 6:
-                    print('大于6',split_line)
-                    print(f"文件 {file_path.split('\\')[-1]}处理第 {i + 1} 行数据时出错，内容为：{line}")
-                    merged_field = '&'.join(split_line[3:-2])  # 用 & 拼接小区中间的号码（原本的 , 拼接会导致读取文件出错）
-                    print(merged_field)
-                    new_line = ','.join(split_line[:3] + [merged_field] + split_line[-2:])
-                    df = pd.read_csv(io.StringIO(new_line), encoding='utf8')
-                    dataframes.append(df)
-                else:
-                    df = pd.read_csv(io.StringIO(line), encoding='utf8')  # 使用指定的编码格式读取文件
-                    dataframes.append(df)
+        try:
+            df = pd.read_csv(file_path, header=None, encoding='utf8')
+            dataframes.append(df)
+        except Exception as e:
+            print(f"文件 {file_path} 读取时出错：{e}")
     else:
         print(f"文件 {file_path} 是空文件，跳过读取。")
 
@@ -59,7 +46,7 @@ for file in file_list:
 
 # 合并所有数据到一个DataFrame
 combined_df = pd.concat(dataframes)
-
+print(combined_df)
 # 数据清洗和处理
 combined_df.rename(columns={0: '日期', 1: '区域', 2: '地区', 3: '小区名', 4: '房价', 5: '二手房数量'}, inplace=True)
 combined_df['房价'] = combined_df['房价'].replace('暂无数据', np.nan)
@@ -69,8 +56,10 @@ average_prices = combined_df.groupby('区域')['房价'].mean()
 median_prices = combined_df.groupby('区域')['房价'].median()
 # 按平均房价排序区域
 sorted_areas = average_prices.sort_values(ascending=False).index
+print(sorted_areas)
 if sorted_areas[-1] == "0套在售二手房":
     sorted_areas = sorted_areas[0:-1]
+
 
 # 设置中文字体
 plt.rc("font", family='Microsoft YaHei')
@@ -83,6 +72,7 @@ median_prices.loc[sorted_areas].plot(kind='bar', color='orange', alpha=0.7, labe
 ax.set_xlabel('区')
 ax.set_ylabel('房价')
 ax.set_title('{0}上海各区房价图（平均数和中位数）'.format(data_folder[-8:]))
+# ax.set_title('{0}上海各区房价图（平均数和中位数）'.format(20240228))
 ax.legend()
 # # 在柱状图上显示平均和中位数的值
 # for i, v in enumerate(average_prices.loc[sorted_areas]):

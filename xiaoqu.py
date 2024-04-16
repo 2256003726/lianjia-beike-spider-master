@@ -11,6 +11,6 @@ from lib.spider.xiaoqu_spider import *
 from wjp.wjp_neighborhood_spider import WjpNeighborhoodSpider
 
 if __name__ == "__main__":
-    # spider = XiaoQuBaseSpider(SPIDER_NAME)
-    spider = WjpNeighborhoodSpider(SPIDER_NAME)
+    spider = XiaoQuBaseSpider(SPIDER_NAME)
+    # spider = WjpNeighborhoodSpider(SPIDER_NAME)
     spider.start()
