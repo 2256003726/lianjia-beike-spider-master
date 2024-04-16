@@ -1,3 +1,9 @@
+爬取小区信息的的话：
+(1)运行wjp_xiaoqu.py。// 爬取数据，并保存。（只是修改了一点别人的代码，使得运行不报错）
+(2)可选。运行process_files.py。这是为了处理一些不好的数据，方便步骤3的画图。记得修改data_folder
+(3) 可选。gen_xiaoqu_chart.py，能够生成各区小区房价的中位数和平均数柱状图，记得修改data_folder。
+如下。
+![alt text](https://github.com/2256003726/lianjia-beike-spider-master/blob/master/pics/sh20240327.png)
 # 链家网(lianjia.com)和贝壳网(ke.com)爬虫
 - 爬取链家网、贝壳网的各类房价数据（小区数据，挂牌二手房, 出租房，新房）。
 - **如果好用，请点星支持 ！**
