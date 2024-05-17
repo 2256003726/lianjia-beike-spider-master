@@ -4,6 +4,19 @@
 - (3) 可选。gen_xiaoqu_chart.py，能够生成各区小区房价的中位数和平均数柱状图，记得修改data_folder。
 如下。
 ![alt text](https://github.com/2256003726/lianjia-beike-spider-master/blob/master/pics/sh20240327.png)
+
+
+# 爬取成交价：
+- (1) 运行chengjiao_spider.py。
+  - 注意：需要自己设置cookie，不然会跳转到登陆页面，爬取失败。
+  - 获取cookie方式：登录贝壳找房官网，并登录，之后手动进入成交页面，按F12查看请求中的cookie。
+- (2) gen_chengjiao_chart_2.py,按区域生成成交价格折线图。
+  - 注意：修改文件路径名。
+![su_chengjiao](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/c5ac75da-75de-4b99-bced-d94a71d9b206)
+- (3) gen_chengjiao_chart_area.py, 按区域生成季度成交价格和成交量。
+  - 注意：修改文件路径名。
+![su_chengnan](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/a1ba3978-addd-4788-8292-ed983a410855)
+
 # 链家网(lianjia.com)和贝壳网(ke.com)爬虫
 - 爬取链家网、贝壳网的各类房价数据（小区数据，挂牌二手房, 出租房，新房）。
 - **如果好用，请点星支持 ！**
@@ -13,16 +26,6 @@
 - 支持图表展示。
 ![alt text](https://github.com/jumper2014/lianjia-spider/blob/master/pic/xiaoqu_top.png)
 ![alt text](https://github.com/jumper2014/lianjia-spider/blob/master/pic/district_top.png)
-
-# 爬取成交价：
--(1) 运行chengjiao_spider.py。
---注意：需要自己设置cookie，不然会跳转到登陆页面，爬取失败。
---获取cookie方式：登录贝壳找房官网，并登录，之后手动进入成交页面，按F12查看请求中的cookie。
--(2) gen_chengjiao_chart_2.py,按区域生成成交价格折线图。注意：修改文件路径名
-![su_chengjiao](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/c5ac75da-75de-4b99-bced-d94a71d9b206)
--(3) gen_chengjiao_chart_area.py, 按区域生成季度成交价格和成交量。注意：修改文件路径名。
-![su_chengnan](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/a1ba3978-addd-4788-8292-ed983a410855)
-
 - 如果链家和贝壳页面结构有调整，欢迎反馈，我将尽力保持更新。
 - 此代码仅供学习与交流，请勿用于商业用途，后果自负。
 
