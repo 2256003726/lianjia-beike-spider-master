@@ -1,8 +1,7 @@
 # 这是一个个人娱乐的代码，用于爬取贝壳找房的数据
-  - 来自于另一个开源项目https://github.com/jumper2014/lianjia-beike-spider。
+  - 来自于另一个开源项目https://github.com/jumper2014/lianjia-beike-spider ,先感谢原作者提供部分代码思路。
   - 如有不足之处或者新的需求，可以联系我的邮箱225600726@qq.com。
-  - 首先感谢无名作者提供部分代码思路，根据原作者部分代码，所采用 Apache License2.0 开源方式。
-  - 不能用于商业用途。
+  - 采用 Apache License2.0 开源方式,不能用于商业用途。
 # 爬取小区信息：
 - (1)运行wjp_xiaoqu.py。// 爬取数据，并保存。（只是修改了一点别人的代码，使得运行不报错）
 - (2)可选。运行process_files.py。这是为了处理一些不好的数据，方便步骤3的画图。记得修改data_folder
