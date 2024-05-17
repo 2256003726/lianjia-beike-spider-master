@@ -1,4 +1,4 @@
-# 爬取小区信息的的话：
+# 爬取小区信息：
 - (1)运行wjp_xiaoqu.py。// 爬取数据，并保存。（只是修改了一点别人的代码，使得运行不报错）
 - (2)可选。运行process_files.py。这是为了处理一些不好的数据，方便步骤3的画图。记得修改data_folder
 - (3) 可选。gen_xiaoqu_chart.py，能够生成各区小区房价的中位数和平均数柱状图，记得修改data_folder。
@@ -13,6 +13,16 @@
 - 支持图表展示。
 ![alt text](https://github.com/jumper2014/lianjia-spider/blob/master/pic/xiaoqu_top.png)
 ![alt text](https://github.com/jumper2014/lianjia-spider/blob/master/pic/district_top.png)
+
+# 爬取成交价：
+-(1) 运行chengjiao_spider.py。
+--注意：需要自己设置cookie，不然会跳转到登陆页面，爬取失败。
+--获取cookie方式：登录贝壳找房官网，并登录，之后手动进入成交页面，按F12查看请求中的cookie。
+-(2) gen_chengjiao_chart_2.py,按区域生成成交价格折线图。注意：修改文件路径名
+![su_chengjiao](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/c5ac75da-75de-4b99-bced-d94a71d9b206)
+-(3) gen_chengjiao_chart_area.py, 按区域生成季度成交价格和成交量。注意：修改文件路径名。
+![su_chengnan](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/a1ba3978-addd-4788-8292-ed983a410855)
+
 - 如果链家和贝壳页面结构有调整，欢迎反馈，我将尽力保持更新。
 - 此代码仅供学习与交流，请勿用于商业用途，后果自负。
 
