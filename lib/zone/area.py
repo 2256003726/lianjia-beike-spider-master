@@ -17,7 +17,7 @@ def get_district_url(city, district):
     :param district: 区县
     :return:
     """
-    return "http://{0}.{1}.com/xiaoqu/{2}".format(city, SPIDER_NAME, district)
+    return "https://{0}.{1}.com/xiaoqu/{2}".format(city, SPIDER_NAME, district)
 
 
 def get_areas(city, district):

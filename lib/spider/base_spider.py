@@ -16,7 +16,7 @@ thread_pool_size = 50
 # 防止爬虫被禁，随机延迟设定
 # 如果不想delay，就设定False，
 # 具体时间可以修改random_delay()，由于多线程，建议数值大于10
-RANDOM_DELAY = False
+RANDOM_DELAY = True
 LIANJIA_SPIDER = "lianjia"
 BEIKE_SPIDER = "ke"
 # SPIDER_NAME = LIANJIA_SPIDER
@@ -27,9 +27,9 @@ class BaseSpider(object):
     @staticmethod
     def random_delay():
         if RANDOM_DELAY:
-            time.sleep(random.randint(0, 16))
+            time.sleep(random.randint(2, 16))
 
-    def __init__(self, name):
+    def __init__(self, name, cookie):
         self.name = name
         if self.name == LIANJIA_SPIDER:
             self.cities = lianjia_cities
@@ -37,6 +37,7 @@ class BaseSpider(object):
             self.cities = beike_cities
         else:
             self.cities = None
+        self.cookie = cookie
         # 准备日期信息，爬到的数据存放到日期相关文件夹下
         self.date_string = get_date_string()
         print('Today date is: %s' % self.date_string)

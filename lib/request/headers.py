@@ -27,11 +27,14 @@ USER_AGENTS = [
 ]
 
 
-def create_headers():
+def create_headers(cookie=None):
     headers = dict()
     headers["User-Agent"] = random.choice(USER_AGENTS)
-    headers["Referer"] = "http://www.{0}.com".format(SPIDER_NAME)
+    # headers["Referer"] = "http://www.{0}.com".format(SPIDER_NAME)
+    headers['Cache-Control'] = 'no-cache'
+    # headers['Host'] = 'sh.ke.com'
     return headers
+
 
 
 if __name__ == '__main__':
