@@ -1,9 +1,44 @@
-# 爬取小区信息的的话：
+# 这是一个个人娱乐的代码，用于爬取贝壳找房的数据
+  - 来自于另一个开源项目https://github.com/jumper2014/lianjia-beike-spider ,先感谢原作者提供部分代码思路。
+  - 如有不足之处或者新的需求，可以联系我的邮箱2256003726@qq.com。
+  - 采用 Apache License2.0 开源方式,不能用于商业用途。
+# 爬取小区信息：
 - (1)运行wjp_xiaoqu.py。// 爬取数据，并保存。（只是修改了一点别人的代码，使得运行不报错）
 - (2)可选。运行process_files.py。这是为了处理一些不好的数据，方便步骤3的画图。记得修改data_folder
 - (3) 可选。gen_xiaoqu_chart.py，能够生成各区小区房价的中位数和平均数柱状图，记得修改data_folder。
 如下。
 ![alt text](https://github.com/2256003726/lianjia-beike-spider-master/blob/master/pics/sh20240327.png)
+
+
+# 爬取成交价：
+- (1) 运行chengjiao_spider.py。
+  - 注意：需要自己设置cookie，不然会跳转到登陆页面，爬取失败。
+  - 获取cookie方式：登录贝壳找房官网，之后手动进入成交页面，按F12查看请求中的cookie。
+- (2) gen_chengjiao_chart_2.py,按区域生成成交价格折线图。
+  - 注意：修改文件路径名。
+![su_chengjiao](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/c5ac75da-75de-4b99-bced-d94a71d9b206)
+- (3) gen_chengjiao_chart_area.py, 按区域生成季度成交价格和成交量。
+  - 注意：修改文件路径名。
+![su_chengnan](https://github.com/2256003726/lianjia-beike-spider-master/assets/58493811/a1ba3978-addd-4788-8292-ed983a410855)
+- **！！！一些细节**
+  - **首先，我在 `chengjiao_spider.py` 设置了总页数最大为 30 页，因为担心页数太多爬太久。**
+  - **我额外提供了一个 `getSingleArea.py`，可以设置爬取某城某区的某个区域。通过 `if district == 'wuzhong'` 设置。**
+  - **在生成成交价图片时，我对数额巨大的成交价格进行了处理（因为存在某些被放大了一万倍的离谱数据，此处批评不认真工作的贝壳登记员🤣）**
+    - **处理成交价和挂牌价**
+
+    ```python
+    combined_df['成交价'] = combined_df['成交价'].apply(lambda x: x / 10000 if x > 1000000 else x)
+    combined_df['挂牌价'] = combined_df['挂牌价'].apply(lambda x: x / 10000 if x > 1000000 else x)
+    ```
+
+    - **处理成交单价和挂牌单价**
+
+    ```python
+    combined_df['成交单价'] = combined_df['成交单价'].apply(lambda x: x / 10000 if x > 500000 else x)
+    combined_df['挂牌单价'] = combined_df['挂牌单价'].apply(lambda x: x / 10000 if x > 1000000 else x)
+    ```
+
+
 # 链家网(lianjia.com)和贝壳网(ke.com)爬虫
 - 爬取链家网、贝壳网的各类房价数据（小区数据，挂牌二手房, 出租房，新房）。
 - **如果好用，请点星支持 ！**
