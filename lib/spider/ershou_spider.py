@@ -29,7 +29,7 @@ class ErShouSpider(BaseSpider):
         """
         district_name = area_dict.get(area_name, "")
         csv_file = self.today_path + "/{0}_{1}.csv".format(district_name, area_name)
-        with open(csv_file, "w") as f:
+        with open(csv_file, "w", encoding='utf-8-sig') as f:
             # 开始获得需要的板块数据
             ershous = self.get_area_ershou_info(city_name, area_name)
             # 锁定，多线程读写
