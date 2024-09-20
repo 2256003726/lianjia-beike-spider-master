@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 start_time = time.time()
 
 # 指定目标文件夹路径
-data_folder = '../data/ke/chengjiao/su/20240513'
+data_folder = '../data/ke/chengjiao/sh/20240814'
 
 # 获取文件夹中所有CSV文件的文件名列表
 file_list = [f for f in os.listdir(data_folder) if f.endswith('.csv')]
@@ -91,7 +91,7 @@ valid_quarters = quarterly_counts[quarterly_counts >= 100].index
 
 # 过滤出符合条件的数据
 valid_data = combined_df[combined_df.set_index(['区域', '年份', '季度']).index.isin(valid_quarters)]
-
+# print(valid_data)
 # 按区域、年份和季度进行分组
 valid_grouped = valid_data.groupby(['区域', '年份', '季度'])
 # 按区域计算平均房价和中位数房价
@@ -134,7 +134,7 @@ plt.rc("font", family='Microsoft YaHei')
 # plt.figure(figsize=(10, 6))
 for region, region_data in average_prices.groupby(level=0):
 
-    ax =region_data.unstack(level=0).plot(kind='line', title=f'区域: {region} 每月平均成交价', xlabel='日期', ylabel='成交价', marker='o',legend=True)
+    ax =region_data.unstack(level=0).plot(kind='line', title=f'区域: {region} 每季度平均成交价', xlabel='日期', ylabel='成交价', marker='o',legend=True)
     # plt.xticks(rotation=45)
     # 设置横坐标标签的显示
 

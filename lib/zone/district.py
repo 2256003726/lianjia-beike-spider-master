@@ -32,6 +32,7 @@ def get_districts(city):
     :return: 英文区县名列表
     """
     url = 'https://{0}.{1}.com/xiaoqu/'.format(city, SPIDER_NAME)
+    print(url)
     headers = create_headers()
     response = requests.get(url, timeout=10, headers=headers)
     html = response.content
@@ -48,6 +49,7 @@ def get_districts(city):
     for index, name in enumerate(en_names):
         chinese_city_district_dict[name] = ch_names[index]
         # print(name + ' -> ' + ch_names[index])
+    print(en_names)
     return en_names
 
 

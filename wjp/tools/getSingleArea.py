@@ -79,7 +79,7 @@ class ChengJiaoSingleArea(BaseSpider):
         for i in range(1, total_page + 1):
             headers = create_headers()
             page = 'https://{0}.{1}.com/chengjiao/{2}/pg{3}'.format(city, SPIDER_NAME, area, i)
-            # print(page,'具体页面')  # 打印版块页面地址
+            print(page)  # 打印版块页面地址
             BaseSpider.random_delay()
             response = requests.get(page, timeout=10, headers=headers, cookies=self.cookie)
 
@@ -161,14 +161,29 @@ class ChengJiaoSingleArea(BaseSpider):
         # 获得每个区的板块, area: 板块
         areas = list()
         for district in districts:
-            if district == 'wuzhong':
-                areas_of_district = get_areas(city, district)
+            # if district == 'minhang':
+            #     areas_of_district = get_areas(city, district)
+            #     print('{0}: Area list:  {1}'.format(district, areas_of_district))
+            #     # 用list的extend方法,L1.extend(L2)，该方法将参数L2的全部元素添加到L1的尾部
+            #     areas.extend(areas_of_district)
+            #     # 使用一个字典来存储区县和板块的对应关系, 例如{'beicai': 'pudongxinqu', }
+            #     for area in areas_of_district:
+            #         area_dict[area] = district
+            if district == 'minhang':
+                # areas_of_district = get_areas(city, district)
+                # print(areas_of_district)
+                # return
+                areas_of_district = ['meilong'] # 手动赋值
+                print(areas_of_district)
                 print('{0}: Area list:  {1}'.format(district, areas_of_district))
                 # 用list的extend方法,L1.extend(L2)，该方法将参数L2的全部元素添加到L1的尾部
                 areas.extend(areas_of_district)
+                print(areas)
+
                 # 使用一个字典来存储区县和板块的对应关系, 例如{'beicai': 'pudongxinqu', }
                 for area in areas_of_district:
                     area_dict[area] = district
+                print(area_dict)
         print("Area:", areas)
         print("District and areas:", area_dict)
 
@@ -194,7 +209,7 @@ class ChengJiaoSingleArea(BaseSpider):
 if __name__ == "__main__":
     # spider = XiaoQuBaseSpider(SPIDER_NAME)
     # date = get_custom_date_string(2024, 3, 27)
-    cookie_str = 'lianjia_uuid=144f9b35-c17b-4f50-b59f-403e8d9f3db7; crosSdkDT2019DeviceId=-ksyepa-1hrfwo-qxlbr3l19i0cm0o-4vbq1xhnh; lfrc_=5b15772d-2000-40a8-a127-18f708e91911; select_city=310000; lianjia_ssid=e7abf813-faa0-4055-9766-691fbb70fc3e; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1713836015,1713856445,1713861511,1715318678; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%2218f09cdfab8497-091034e9d545cf-26001d51-2359296-18f09cdfab9626%22%2C%22%24device_id%22%3A%2218f09cdfab8497-091034e9d545cf-26001d51-2359296-18f09cdfab9626%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E4%BB%98%E8%B4%B9%E5%B9%BF%E5%91%8A%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22https%3A%2F%2Fwww.baidu.com%2Fother.php%22%2C%22%24latest_referrer_host%22%3A%22www.baidu.com%22%2C%22%24latest_search_keyword%22%3A%22%E8%B4%9D%E5%A3%B3%22%2C%22%24latest_utm_source%22%3A%22baidu%22%2C%22%24latest_utm_medium%22%3A%22pinzhuan%22%2C%22%24latest_utm_campaign%22%3A%22wyshanghai%22%2C%22%24latest_utm_content%22%3A%22biaotimiaoshu%22%2C%22%24latest_utm_term%22%3A%22biaoti%22%7D%7D; login_ucid=2000000343964847; lianjia_token=2.00132353c47e384287028e7af5a5d3a5ba; lianjia_token_secure=2.00132353c47e384287028e7af5a5d3a5ba; security_ticket=Sc7p58oT0o5qAFJFDYtnX8xtLiyaF6k5tXncWJRDOKjIlLaU1hTUy3JPcN3y0tS5Bi/WvBAMbCgnlLXPz0qlZeDe9kkQI+QY9mwQT8w1W8ceESgwJ8ZNUULNADRHV7tYFU6VlDMD8MSqx+Ny3fgzxcZUdJX9vzsv+fG7aN5jKHY=; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1715318748; srcid=eyJ0Ijoie1wiZGF0YVwiOlwiM2MwMTQ4YzQyMTY1OWE2ZTAyNzYzMGU2NTkwMDYxMzA3OGNkNGIwOWExZjJlMTU0MWFmYmIyZjJlZmQ0NzNjNzAwNTlkYzAwNGI5NmIzY2M1MTdhMmFkOGJjY2NiNjg3ZmFjODI4NWUxNWE0M2E3ZWI5N2E5ZjY5MThhNDI3OTQyODNhZmEzNDk4ZjViNzBlM2U5MTA2ZWIzMDkzNTMzNmY5NGQ3OTM5YmY3YjhiZmY1ZDY2NWRlYmIxMDNiMDFiMzk4OGE0M2JlN2E1ODNmOTY3YzU4MjIwMzVkZDFiM2FhZDY5ZGYyMjM2NDNhMzU5NzNkMmVhNDljNWYzZmM5M1wiLFwia2V5X2lkXCI6XCIxXCIsXCJzaWduXCI6XCIyMTAxZDkyOVwifSIsInIiOiJodHRwczovL3NoLmtlLmNvbS9jaGVuZ2ppYW8vIiwib3MiOiJ3ZWIiLCJ2IjoiMC4xIn0=; lianjia_ssid=e7abf813-faa0-4055-9766-691fbb70fc3e; lianjia_uuid=2999b082-728c-4303-b0f8-75ff5908cf62'
+    cookie_str = 'SECKEY_ABVK=0xPwa6aF6497XTmVk7ONP94LIR6D+bC8JU+NvkSeFAE%3D; BMAP_SECKEY=yEAJ7XQenl5lz-H7FJU6ngPpBuiN7YshLC3YiffQF_Q4urRRPqVwZFx88MT35rm8RrboqaAmoQetMO3BNS_g7r6m5na1NgCFjEIKxU9zDzp9EChiMYtn9T28qLMxG1ZY56tHZQO97a_nSDDr8wbGGqYfog8iOhX9AKe1mGdMBjmwK5-Pinsn4aRLyi-nLPre; lianjia_uuid=7eb67d73-c17d-4612-a7ea-3d072d1ed6be; crosSdkDT2019DeviceId=3jfztq-4zlfbd-25usgofq588t5nj-hoqolh8md; _ga=GA1.2.1471045471.1718161908; ke_uuid=5f009f0342ef5961ee1dd0dad22665e9; lfrc_=a764d531-bd53-4022-aab6-c11e8d38b31d; ftkrc_=9e7a80c5-18b0-41e3-8497-eef8bbf9d761; __xsptplus788=788.3.1721868060.1721868060.1%234%7C%7C%7C%7C%7C%23%23%23; select_city=310000; Hm_lvt_9152f8221cb6243a53c83b956842be8a=1721785615,1723614229; HMACCOUNT=DD527BC0F9FD8F37; login_ucid=2000000343964847; lianjia_token=2.00130b5c7a7e104d3902a6754ba9f9fd59; lianjia_token_secure=2.00130b5c7a7e104d3902a6754ba9f9fd59; security_ticket=B/Btu7JEH7rUAADGwD87q4jHfQ00xiTxfyDmcIPK1Y7lYIx3iTsLkmNlFgkn+gRkfEUfVO4w1vtVKL94iXB4lc6hxzXAuQpJ+SWz9VS5gZIMtXioywIL8g2cjQayZ+bMWAzj3sfLCpN9fDwtKbBWc15FAS3mGBxBGe7dbW4KaOg=; lianjia_ssid=8f131793-faf2-4179-9baa-85645bcdf155; hip=0ZziHOEifpks2g82GsUTd72PVU8KQ_qsKJxm9XJsS1241OsyQ8JZ-D7zy9a-lB3BvM9bWn9Sf3UpvS9iGnjD6OEJ3ECY_XWzsztwUPW3ElXRcuzaRniqOBfwflbthr-tj2b0ry7VdQvXmANzJ_Kv_6JTDUGn_8JLISJWFfffZfExqQubfoU%3D; sensorsdata2015jssdkcross=%7B%22distinct_id%22%3A%221900a35d9b3395-0cd25dd4cbf544-26001c51-2359296-1900a35d9b41e4e%22%2C%22%24device_id%22%3A%221900a35d9b3395-0cd25dd4cbf544-26001c51-2359296-1900a35d9b41e4e%22%2C%22props%22%3A%7B%22%24latest_traffic_source_type%22%3A%22%E7%9B%B4%E6%8E%A5%E6%B5%81%E9%87%8F%22%2C%22%24latest_referrer%22%3A%22%22%2C%22%24latest_referrer_host%22%3A%22%22%2C%22%24latest_search_keyword%22%3A%22%E6%9C%AA%E5%8F%96%E5%88%B0%E5%80%BC_%E7%9B%B4%E6%8E%A5%E6%89%93%E5%BC%80%22%2C%22%24latest_utm_source%22%3A%22baidu%22%2C%22%24latest_utm_medium%22%3A%22pinzhuan%22%2C%22%24latest_utm_campaign%22%3A%22wyshanghai%22%2C%22%24latest_utm_content%22%3A%22biaotimiaoshu%22%2C%22%24latest_utm_term%22%3A%22biaoti%22%7D%7D; Hm_lpvt_9152f8221cb6243a53c83b956842be8a=1723685386; srcid=eyJ0Ijoie1wiZGF0YVwiOlwiZTFkMzgwMDI1MjI1YTdiYmQzNjI2Mzk2NGJhOGY4MTNkZGYwMDk2NDkxZjZmOWIzZWFjYjgxZDdlMmU5YzhkYzhhYzQzNGVkYmNiNDhhOWNiYTY4YzMxODdiZjg1MTdhNWZlMmE5Y2U4ZWZiNjBmMTczMGIzMjhhN2Q3ZGY5Y2VhMmE5N2U3MDA2YWI2OWUyMGQ1OTJiMWY0MWY2M2FhMzcyODE3YjI0MGNmMmI0Mzc1NzUxYjEyMjJhMGZhYmI0MDdkMzE3YzI3NTJjOGM5OGRkOGJiMWY4OWFjZGVhMDFhZDUwY2JhZTkyNzk4ODAzM2E0NTVlODUwN2JjNmNjOVwiLFwia2V5X2lkXCI6XCIxXCIsXCJzaWduXCI6XCI3Mzg2NjljNlwifSIsInIiOiJodHRwczovL3NoLmtlLmNvbS9jaGVuZ2ppYW8vbWVpbG9uZy8iLCJvcyI6IndlYiIsInYiOiIwLjEifQ=='
     cookies = {item.split("=")[0]: item.split("=")[1] for item in cookie_str.split("; ")}
     spider = ChengJiaoSingleArea(SPIDER_NAME, cookie=cookies)
     spider.start()

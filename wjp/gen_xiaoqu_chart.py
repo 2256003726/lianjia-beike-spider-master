@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 start_time = time.time()
 
 # 指定目标文件夹路径
-data_folder = '../data/ke/xiaoqu/sh/20240327'
+data_folder = '../data/ke/xiaoqu/sh/20240920'
 # data_folder = '../../data/ke/xiaoqu/sh/20230115'
 
 # data_folder = '../../data/ke/xiaoqu/zz/20240115'
@@ -46,11 +46,17 @@ for file in file_list:
 
 # 合并所有数据到一个DataFrame
 combined_df = pd.concat(dataframes)
+
+
 print(combined_df)
 # 数据清洗和处理
 combined_df.rename(columns={0: '日期', 1: '区域', 2: '地区', 3: '小区名', 4: '房价', 5: '二手房数量'}, inplace=True)
 combined_df['房价'] = combined_df['房价'].replace('暂无数据', np.nan)
 combined_df['房价'] = combined_df['房价'].str.replace('元/m2', '', regex=False).astype(float)
+
+# 处理成交价和挂牌价
+combined_df['房价'] = combined_df['房价'].apply(lambda x: x / 10000 if x > 1000000 else x)
+# combined_df['挂牌价'] = combined_df['挂牌价'].apply(lambda x: x / 10000 if x > 1000000 else x)
 # 按区域计算平均房价和中位数房价
 average_prices = combined_df.groupby('区域')['房价'].mean()
 median_prices = combined_df.groupby('区域')['房价'].median()

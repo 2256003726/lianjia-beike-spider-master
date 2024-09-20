@@ -22,7 +22,7 @@ THREAD_POOL_SIZE = 50  # 线程数
 # 防止爬虫被禁，随机延迟设定
 # 如果不想delay，就设定False，
 # 具体时间可以修改random_delay()，由于多线程，建议数值大于10
-RANDOM_DELAY = False
+RANDOM_DELAY = True
 LIANJIA_SPIDER = "lianjia"
 BK_SPIDER = "ke"
 SPIDER_NAME = BK_SPIDER  # 默认爬虫选择贝壳
@@ -31,7 +31,7 @@ class WjpBaseSpider(object):
     @staticmethod
     def rand_delay():
         if RANDOM_DELAY:
-            time.sleep(random.randint(0, 16))
+            time.sleep(random.randint(1, 10))
 
 
     def __init__(self, name):

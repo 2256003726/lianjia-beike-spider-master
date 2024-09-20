@@ -2,10 +2,13 @@
 # -*- coding: UTF-8 -*-
 """
 @Project ：lianjia-beike-spider-master 
-@File    ：process_files.py
+@File    ：process_ershou_files.py
 @Author  ：王金鹏
-@Date    ：2024/2/6 10:28 
+@Date    ：2024/3/1 16:02 
 """
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
 import os
 from itertools import zip_longest
 
@@ -68,7 +71,7 @@ def process_and_update_csv(file_path, log_file):
 if __name__ == '__main__':
     # 使用方法
     # 指定目标文件夹路径
-    data_folder = '../../data/ke/xiaoqu/sh/20240920'
+    data_folder = '../../data/ke/xiaoqu/sh/20240115'
     # data_folder = '../../data/ke/xiaoqu/sh/20230115'
 
     # data_folder = '../../data/ke/xiaoqu/zz/20240115'

@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 start_time = time.time()
 
 # 指定目标文件夹路径
-data_folder = '../data/ke/chengjiao/su/20240513'
+data_folder = '../data/ke/chengjiao/sh/20240815'
 
 # 获取文件夹中所有CSV文件的文件名列表
 file_list = [f for f in os.listdir(data_folder) if f.endswith('.csv')]
@@ -89,22 +89,25 @@ grouped = combined_df.groupby(['地区', '年份', '季度'])
 quarterly_counts = grouped.size()
 
 # 筛选出数据量大于等于100条的季度
-valid_quarters = quarterly_counts[quarterly_counts >= 100].index
+valid_quarters = quarterly_counts[quarterly_counts >= 0].index
 
 # 过滤出符合条件的数据
 valid_data = combined_df[combined_df.set_index(['地区', '年份', '季度']).index.isin(valid_quarters)]
-
+print(valid_data)
 # 按区域、年份和季度进行分组
 # valid_grouped = valid_data.groupby(['地区', '年份', '季度'])
 # 筛选出城南地区的数据
-chengnan_data = valid_data[valid_data['地区'] == '城南']
+single_area = 'meilong'
+area_data = valid_data[valid_data['地区'] == single_area]
 
 # 按照区域、年份和季度进行分组
-chengnan_grouped = chengnan_data.groupby(['年份', '季度'])
+area_grouped = area_data.groupby(['年份', '季度'])
 
 # 计算每个季度的平均成交单价和成交量
-average_prices = chengnan_grouped['成交单价'].mean()
-transaction_counts = chengnan_grouped.size()
+average_prices = area_grouped['成交单价'].mean()
+transaction_counts = area_grouped.size()
+# 计算每个季度的平均挂牌单价
+average_list_prices = area_grouped['挂牌单价'].mean()
 print(average_prices.index)
 print(average_prices.values)
 # 将 MultiIndex 中的每个元组转换为字符串作为标签
@@ -124,6 +127,12 @@ ax1.tick_params(axis='y', labelcolor='tab:blue')
 for i, price in enumerate(average_prices.values):
     ax1.text(labels[i], price, f'{price:.0f}', ha='center', va='bottom', fontsize=12)
 
+# 绘制挂牌单价折线图
+ax1.plot(labels, average_list_prices.values, color='tab:green', marker='x', label='挂牌单价')
+# 在挂牌单价折线图上方标注数字
+for i, price in enumerate(average_list_prices.values):
+    ax1.text(labels[i], price, f'{price:.0f}', ha='center', va='bottom', fontsize=12, color='green')
+
 # 创建第二个 y 轴并绘制柱状图
 ax2 = ax1.twinx()
 ax2.bar(labels, transaction_counts.values, color='tab:orange', alpha=0.5, label='成交量')
@@ -136,6 +145,6 @@ ax2.tick_params(axis='y', labelcolor='tab:orange')
 # 添加图例（调整位置参数）
 fig.legend(loc="upper right", bbox_to_anchor=(1,0.9))
 # 添加标题
-plt.title('城南区域季度成交单价和成交量')
+plt.title(single_area+'区域季度成交单价和成交量')
 plt.xticks(rotation=45)  # 旋转 x 轴标签以免重叠
 plt.show()

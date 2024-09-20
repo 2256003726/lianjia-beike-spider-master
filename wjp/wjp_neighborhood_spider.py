@@ -54,7 +54,7 @@ class WjpNeighborhoodSpider(WjpBaseSpider):
         chinese_district = get_chinese_district(district)
         chinese_subdistrict = chinese_area_dict.get(subdistrict, "")
         neighborhood_list = list()
-        page = 'http://{0}.{1}.com/xiaoqu/{2}/'.format(city, SPIDER_NAME, subdistrict)
+        page = 'https://{0}.{1}.com/xiaoqu/{2}/'.format(city, SPIDER_NAME, subdistrict)
         print(page)
         # 开始准备网络请求
         headers = create_headers()
@@ -72,7 +72,7 @@ class WjpNeighborhoodSpider(WjpBaseSpider):
         # 从第一页开始,一直遍历到最后一页
         for i in range(1, total_page + 1):
             headers = create_headers()
-            page = 'http://{0}.{1}.com/xiaoqu/{2}/pg{3}'.format(city, SPIDER_NAME, subdistrict, i)
+            page = 'https://{0}.{1}.com/xiaoqu/{2}/pg{3}'.format(city, SPIDER_NAME, subdistrict, i)
             print(page)  # 打印版块页面地址
             WjpBaseSpider.rand_delay()
             response = requests.get(page, timeout=10, headers=headers)
@@ -108,6 +108,7 @@ class WjpNeighborhoodSpider(WjpBaseSpider):
         # 获得每个区的板块, area: 板块
         areas = list()
         for district in districts:
+            WjpBaseSpider.rand_delay()
             areas_of_district = get_areas(city, district)
             print('{0}: Area list:  {1}'.format(district, areas_of_district))
             # 用list的extend方法,L1.extend(L2)，该方法将参数L2的全部元素添加到L1的尾部
@@ -142,5 +143,5 @@ if __name__ == "__main__":
     # urls = get_xiaoqu_area_urls()
     # print urls
     # get_xiaoqu_info("sh", "beicai")
-    spider = WjpNeighborhoodSpider("lianjia")
+    spider = WjpNeighborhoodSpider("ke")
     spider.start()
